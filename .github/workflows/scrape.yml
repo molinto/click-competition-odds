@@ -1,12 +1,14 @@
 name: Scrape Click Competitions
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 on:
   schedule:
-    - cron: "15 * * * *" # every 15mins (UTC)
-  workflow_dispatch:      # allows manual runs from GitHub UI
+    - cron: "0 * * * *"
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -35,14 +37,3 @@ jobs:
             --category Tech="https://www.clickcompetitions.co.uk/competition-category/tech-competitions/" \
             --category Daily="https://www.clickcompetitions.co.uk/competition-category/daily-deals/" \
             --out out/combined_click_comps.csv \
-            --out-json out/combined_click_comps.json \
-            --html out/index.html
-
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add out/
-          git commit -m "Update competition odds" || echo "No changes to commit"
-          git push
