@@ -1,8 +1,11 @@
 name: Scrape Click Competitions
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    - cron: "0 * * * *"   # every hour, on the hour (UTC)
+    - cron: "15 * * * *" # every 15mins (UTC)
   workflow_dispatch:      # allows manual runs from GitHub UI
 
 jobs:
