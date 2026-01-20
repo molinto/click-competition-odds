@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Click Competitions – Best Odds</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --panel: #121a26;
+      --text: #e8eefc;
+      --muted: #a9b6d1;
+      --border: #243145;
+      --accent: #7aa2ff;
+      --good: #3ddc97;
+      --warn: #ffcc66;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 18px;
+    }
+    input, select {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      outline: none;
+      min-width: 220px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead th {
+      text-align: left;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      background: rgba(18,26,38,0.98);
+      backdrop-filter: blur(8px);
+    }
+    tbody td {
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(36,49,69,0.55);
+      vertical-align: top;
+    }
+    tbody tr:hover {
+      background: rgba(122,162,255,0.08);
+    }
+    .title a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .title a:hover {
+      text-decoration: underline;
+      color: var(--accent);
+    }
+    .num {
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .cat {
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 260px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .footer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 860px) {
+      thead th:nth-child(4),
+      tbody td:nth-child(4),
+      thead th:nth-child(5),
+      tbody td:nth-child(5),
+      thead th:nth-child(8),
+      tbody td:nth-child(8),
+      thead th:nth-child(9),
+      tbody td:nth-child(9) {
+        display: none;
+      }
+      input, select { min-width: 160px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Best odds (Click Competitions)</h1>
+      <div class="sub">
+        Sorted by <span class="pill">Win chance with £10</span> (desc). Also shows <span class="pill">£20</span> and estimated gross revenue per comp (price × total tickets).
+      </div>
+    </header>
+
+    <div class="controls">
+      <input id="q" placeholder="Search title…" />
+      <select id="cat">
+        <option value="">All categories</option>
+      </select>
+      <select id="sort">
+        <option value="p10">Sort: Win % (£10) desc</option>
+        <option value="p20">Sort: Win % (£20) desc</option>
+        <option value="rev">Sort: Revenue asc</option>
+        <option value="rev_desc">Sort: Revenue desc</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Competition</th>
+            <th class="num">Ticket £</th>
+            <th class="num">Tickets</th>
+            <th class="num">Sold</th>
+            <th class="num">Win % (£10)</th>
+            <th class="num">Win % (£20)</th>
+            <th class="num">Revenue</th>
+            <th>Sales end</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1ggoldbar22nd/" target="_blank" rel="noopener noreferrer">Win This 1G Gold Bar!</a>
+            </td>
+            <td class="num">£0.99</td>
+            <td class="num">299</td>
+            <td class="num">40</td>
+            <td class="num">3.3445%</td>
+            <td class="num">6.6890%</td>
+            <td class="num">£296.01</td>
+            <td class="meta">22nd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/nordictrackdumbbell24th/" target="_blank" rel="noopener noreferrer">Win This NordicTrack 25kg Adjustable Dumbbell Set</a>
+            </td>
+            <td class="num">£0.45</td>
+            <td class="num">1399</td>
+            <td class="num">126</td>
+            <td class="num">1.5726%</td>
+            <td class="num">3.1451%</td>
+            <td class="num">£629.55</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/ps5xboxseriesx/" target="_blank" rel="noopener noreferrer">Win This PS5 Disc Edition OR Xbox Series X!</a>
+            </td>
+            <td class="num">£0.35</td>
+            <td class="num">2999</td>
+            <td class="num">349</td>
+            <td class="num">0.9336%</td>
+            <td class="num">1.9006%</td>
+            <td class="num">£1,049.65</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/5ggoldbar20thjan/" target="_blank" rel="noopener noreferrer">Win This 5G Gold Bar!</a>
+            </td>
+            <td class="num">£0.99</td>
+            <td class="num">1099</td>
+            <td class="num">229</td>
+            <td class="num">0.9099%</td>
+            <td class="num">1.8198%</td>
+            <td class="num">£1,088.01</td>
+            <td class="meta">20th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/5ggoldbar27th/" target="_blank" rel="noopener noreferrer">Win This 5G Gold Bar!</a>
+            </td>
+            <td class="num">£0.99</td>
+            <td class="num">1099</td>
+            <td class="num">1</td>
+            <td class="num">0.9099%</td>
+            <td class="num">1.8198%</td>
+            <td class="num">£1,088.01</td>
+            <td class="meta">27th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/dysonairwrapcoanda/" target="_blank" rel="noopener noreferrer">Win This NEW Dyson Airwrap Co-anda!</a>
+            </td>
+            <td class="num">£0.12</td>
+            <td class="num">9995</td>
+            <td class="num">696</td>
+            <td class="num">0.8304%</td>
+            <td class="num">1.6608%</td>
+            <td class="num">£1,199.40</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/ps5pro21st/" target="_blank" rel="noopener noreferrer">Win This PlayStation 5 Pro</a>
+            </td>
+            <td class="num">£0.21</td>
+            <td class="num">6449</td>
+            <td class="num">966</td>
+            <td class="num">0.7288%</td>
+            <td class="num">1.4731%</td>
+            <td class="num">£1,354.29</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1kcash23rd/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash For £3.25!</a>
+            </td>
+            <td class="num">£3.25</td>
+            <td class="num">449</td>
+            <td class="num">12</td>
+            <td class="num">0.6682%</td>
+            <td class="num">1.3363%</td>
+            <td class="num">£1,459.25</td>
+            <td class="meta">23rd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/samsungtv21stjan/" target="_blank" rel="noopener noreferrer">Win This Samsung 75″ 4K Smart TV</a>
+            </td>
+            <td class="num">£0.20</td>
+            <td class="num">7999</td>
+            <td class="num">1895</td>
+            <td class="num">0.6251%</td>
+            <td class="num">1.2502%</td>
+            <td class="num">£1,599.80</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/samsungtv24thjan/" target="_blank" rel="noopener noreferrer">Win This Samsung 75″ 4K Smart TV</a>
+            </td>
+            <td class="num">£0.20</td>
+            <td class="num">7999</td>
+            <td class="num">199</td>
+            <td class="num">0.6251%</td>
+            <td class="num">1.2502%</td>
+            <td class="num">£1,599.80</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1000taxfreecash21st/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash *LOW ODDS*</a>
+            </td>
+            <td class="num">£9.95</td>
+            <td class="num">199</td>
+            <td class="num">17</td>
+            <td class="num">0.5025%</td>
+            <td class="num">1.0050%</td>
+            <td class="num">£1,980.05</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1000taxfreecash24thjan/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash *LOW ODDS COMP*</a>
+            </td>
+            <td class="num">£9.95</td>
+            <td class="num">199</td>
+            <td class="num">1</td>
+            <td class="num">0.5025%</td>
+            <td class="num">1.0050%</td>
+            <td class="num">£1,980.05</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1klowodds25thjan/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash *LOW ODDS*</a>
+            </td>
+            <td class="num">£9.95</td>
+            <td class="num">199</td>
+            <td class="num">0</td>
+            <td class="num">0.5025%</td>
+            <td class="num">1.0050%</td>
+            <td class="num">£1,980.05</td>
+            <td class="meta">25th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1kmonday26th/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash *LOW ODDS*</a>
+            </td>
+            <td class="num">£9.95</td>
+            <td class="num">199</td>
+            <td class="num">0</td>
+            <td class="num">0.5025%</td>
+            <td class="num">1.0050%</td>
+            <td class="num">£1,980.05</td>
+            <td class="meta">26th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1k10ptaxfreecash26th/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash For 10p!</a>
+            </td>
+            <td class="num">£0.10</td>
+            <td class="num">19995</td>
+            <td class="num">106</td>
+            <td class="num">0.5001%</td>
+            <td class="num">1.0003%</td>
+            <td class="num">£1,999.50</td>
+            <td class="meta">26th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1ktaxfreecash22nd/" target="_blank" rel="noopener noreferrer">Win £1,000 Tax Free Cash For 10p!</a>
+            </td>
+            <td class="num">£0.10</td>
+            <td class="num">19995</td>
+            <td class="num">1170</td>
+            <td class="num">0.5001%</td>
+            <td class="num">1.0003%</td>
+            <td class="num">£1,999.50</td>
+            <td class="meta">22nd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/10ggoldbar21stjan/" target="_blank" rel="noopener noreferrer">Win This 10G Gold Bar *LOW ODDS*</a>
+            </td>
+            <td class="num">£3.99</td>
+            <td class="num">499</td>
+            <td class="num">198</td>
+            <td class="num">0.4008%</td>
+            <td class="num">1.0020%</td>
+            <td class="num">£1,991.01</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/1500taxfreecash22ndjan/" target="_blank" rel="noopener noreferrer">Win £1,500 Tax Free Cash *LOW ODDS*</a>
+            </td>
+            <td class="num">£3.25</td>
+            <td class="num">749</td>
+            <td class="num">40</td>
+            <td class="num">0.4005%</td>
+            <td class="num">0.8011%</td>
+            <td class="num">£2,434.25</td>
+            <td class="meta">22nd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/2500cash8p23rd/" target="_blank" rel="noopener noreferrer">Win £2,500 Tax Free Cash For 8p!</a>
+            </td>
+            <td class="num">£0.08</td>
+            <td class="num">49995</td>
+            <td class="num">832</td>
+            <td class="num">0.2500%</td>
+            <td class="num">0.5001%</td>
+            <td class="num">£3,999.60</td>
+            <td class="meta">23rd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/2500taxfreecash20th/" target="_blank" rel="noopener noreferrer">Win £2,500 Tax Free Cash For 8p!</a>
+            </td>
+            <td class="num">£0.08</td>
+            <td class="num">49995</td>
+            <td class="num">15782</td>
+            <td class="num">0.2500%</td>
+            <td class="num">0.5001%</td>
+            <td class="num">£3,999.60</td>
+            <td class="meta">20th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/2500taxfreecash24th/" target="_blank" rel="noopener noreferrer">Win £2,500 Tax Free Cash For 8p!</a>
+            </td>
+            <td class="num">£0.08</td>
+            <td class="num">49995</td>
+            <td class="num">506</td>
+            <td class="num">0.2500%</td>
+            <td class="num">0.5001%</td>
+            <td class="num">£3,999.60</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/2500taxfreecash26thjan/" target="_blank" rel="noopener noreferrer">Win £2,500 Tax Free Cash For 8p!</a>
+            </td>
+            <td class="num">£0.08</td>
+            <td class="num">49995</td>
+            <td class="num">207</td>
+            <td class="num">0.2500%</td>
+            <td class="num">0.5001%</td>
+            <td class="num">£3,999.60</td>
+            <td class="meta">27th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/tahwatch21st/" target="_blank" rel="noopener noreferrer">Win This TAG Heuer Formula 1 Chronograph Watch!</a>
+            </td>
+            <td class="num">£0.04</td>
+            <td class="num">99995</td>
+            <td class="num">14797</td>
+            <td class="num">0.2500%</td>
+            <td class="num">0.5000%</td>
+            <td class="num">£3,999.80</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/fridatpet23rdjan/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Friday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">717</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">23rd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/monday26thjan/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Monday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">263</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">26th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/pet250endprize22ndjan/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Thursday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">522</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">22nd Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/petdaily25024th/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Saturday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">445</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/pettuesday20thjan/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Tuesday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">1572</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">20th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/sunpet250end/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Sunday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">195</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">25th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/tue27thjan/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Tuesday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">362</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">27th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Daily</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/wedpet21st/" target="_blank" rel="noopener noreferrer">Win A Prize Everytime *Daily Edition Wednesday*</a>
+            </td>
+            <td class="num">£2.00</td>
+            <td class="num">2999</td>
+            <td class="num">945</td>
+            <td class="num">0.1667%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,998.00</td>
+            <td class="meta">21st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/3k16p25th/" target="_blank" rel="noopener noreferrer">Win £3,000 Tax Free Cash For 16p!</a>
+            </td>
+            <td class="num">£0.16</td>
+            <td class="num">37495</td>
+            <td class="num">221</td>
+            <td class="num">0.1654%</td>
+            <td class="num">0.3334%</td>
+            <td class="num">£5,999.20</td>
+            <td class="meta">25th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cars</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/greenfoxsurron/" target="_blank" rel="noopener noreferrer">Win This Brand New 2025 Sur-ron LBX Off Road Electric Bike *FREE UK WIDE DELIVERY*</a>
+            </td>
+            <td class="num">£0.04</td>
+            <td class="num">199995</td>
+            <td class="num">19186</td>
+            <td class="num">0.1250%</td>
+            <td class="num">0.2500%</td>
+            <td class="num">£7,999.80</td>
+            <td class="meta">24th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/5k1ptaxfreecash26th/" target="_blank" rel="noopener noreferrer">Win £5,000 Tax Free Cash For 1p!</a>
+            </td>
+            <td class="num">£0.01</td>
+            <td class="num">999995</td>
+            <td class="num">14802</td>
+            <td class="num">0.1000%</td>
+            <td class="num">0.2000%</td>
+            <td class="num">£9,999.95</td>
+            <td class="meta">26th Jan 2026 @ 10:00 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/10kfor18pjan/" target="_blank" rel="noopener noreferrer">Win £10,000 Tax Free Cash For 18p</a>
+            </td>
+            <td class="num">£0.18</td>
+            <td class="num">85095</td>
+            <td class="num">27268</td>
+            <td class="num">0.0646%</td>
+            <td class="num">0.1304%</td>
+            <td class="num">£15,317.10</td>
+            <td class="meta">21st Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Tech</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/bluedatejust/" target="_blank" rel="noopener noreferrer">Win This Blue Rolex Datejust</a>
+            </td>
+            <td class="num">£0.10</td>
+            <td class="num">199995</td>
+            <td class="num">9642</td>
+            <td class="num">0.0500%</td>
+            <td class="num">0.1000%</td>
+            <td class="num">£19,999.50</td>
+            <td class="meta">24th Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/20k18p24th/" target="_blank" rel="noopener noreferrer">Win £20,000 Tax Free Cash For 18p!</a>
+            </td>
+            <td class="num">£0.18</td>
+            <td class="num">169995</td>
+            <td class="num">2212</td>
+            <td class="num">0.0324%</td>
+            <td class="num">0.0653%</td>
+            <td class="num">£30,599.10</td>
+            <td class="meta">24th Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cars</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/gtiorgtd/" target="_blank" rel="noopener noreferrer">Win This MK8 VW Golf GTI or This MK8 VW Golf GTD & £1,000 Cash *YOU CHOOSE*</a>
+            </td>
+            <td class="num">£0.15</td>
+            <td class="num">399995</td>
+            <td class="num">102649</td>
+            <td class="num">0.0165%</td>
+            <td class="num">0.0333%</td>
+            <td class="num">£59,999.25</td>
+            <td class="meta">21st Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cars</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/glc63s/" target="_blank" rel="noopener noreferrer">Win This Mercedes GLC63S Premium AMG & £1,000 Cash *Premium Spec*</a>
+            </td>
+            <td class="num">£0.19</td>
+            <td class="num">415995</td>
+            <td class="num">9057</td>
+            <td class="num">0.0125%</td>
+            <td class="num">0.0252%</td>
+            <td class="num">£79,039.05</td>
+            <td class="meta">28th Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cars</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/m3g80/" target="_blank" rel="noopener noreferrer">Win This BMW M3 Competition X-Drive G80 & £1,000 Cash *Isle Of Man Green*</a>
+            </td>
+            <td class="num">£0.33</td>
+            <td class="num">289995</td>
+            <td class="num">19758</td>
+            <td class="num">0.0103%</td>
+            <td class="num">0.0207%</td>
+            <td class="num">£95,698.35</td>
+            <td class="meta">24th Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/100k31stjan/" target="_blank" rel="noopener noreferrer">Win £100,000 Tax Free Cash For Just 99p!</a>
+            </td>
+            <td class="num">£0.99</td>
+            <td class="num">179995</td>
+            <td class="num">15474</td>
+            <td class="num">0.0056%</td>
+            <td class="num">0.0111%</td>
+            <td class="num">£178,195.05</td>
+            <td class="meta">31st Jan 2026 @ 8:15 PM</td>
+          </tr>
+        
+
+          <tr>
+            <td class="cat">Cash</td>
+            <td class="title">
+              <a href="https://www.clickcompetitions.co.uk/competition/janmegawins/" target="_blank" rel="noopener noreferrer">JANUARY MEGA WINS INSTANT WIN + £2,500 END PRIZE!</a>
+            </td>
+            <td class="num">£0.20</td>
+            <td class="num">899995</td>
+            <td class="num">202685</td>
+            <td class="num">0.0056%</td>
+            <td class="num">0.0111%</td>
+            <td class="num">£179,999.00</td>
+            <td class="meta">31st Jan 2026 @ 8:00 PM</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      Generated by scrape_clickcompetitions_all.py
+    </div>
+  </div>
+
+  <script>
+    const table = document.getElementById('tbl');
+    const tbody = table.querySelector('tbody');
+    const q = document.getElementById('q');
+    const cat = document.getElementById('cat');
+    const sort = document.getElementById('sort');
+
+    function parsePct(s) {
+      if (!s) return 0;
+      return parseFloat(String(s).replace('%','')) || 0;
+    }
+    function parseMoney(s) {
+      if (!s) return NaN;
+      return parseFloat(String(s).replace('£','').replaceAll(',','')) || NaN;
+    }
+
+    // Build category dropdown from table content
+    const cats = new Set();
+    [...tbody.querySelectorAll('tr')].forEach(tr => {
+      cats.add(tr.children[0].textContent.trim());
+    });
+    [...cats].sort().forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      cat.appendChild(opt);
+    });
+
+    function apply() {
+      const query = q.value.trim().toLowerCase();
+      const catVal = cat.value;
+
+      const rows = [...tbody.querySelectorAll('tr')];
+
+      // Filter
+      rows.forEach(tr => {
+        const title = tr.children[1].textContent.toLowerCase();
+        const c = tr.children[0].textContent.trim();
+        const okQ = !query || title.includes(query);
+        const okC = !catVal || c === catVal;
+        tr.style.display = (okQ && okC) ? '' : 'none';
+      });
+
+      // Sort (only visible rows)
+      const visible = rows.filter(r => r.style.display !== 'none');
+      const key = sort.value;
+
+      visible.sort((a,b) => {
+        const aP10 = parsePct(a.children[5].textContent);
+        const bP10 = parsePct(b.children[5].textContent);
+        const aP20 = parsePct(a.children[6].textContent);
+        const bP20 = parsePct(b.children[6].textContent);
+        const aRev = parseMoney(a.children[7].textContent);
+        const bRev = parseMoney(b.children[7].textContent);
+
+        if (key === 'p20') return bP20 - aP20;
+        if (key === 'rev') return (aRev - bRev);
+        if (key === 'rev_desc') return (bRev - aRev);
+        return bP10 - aP10; // default p10
+      });
+
+      // Re-append sorted visible rows, keep hidden ones at end
+      visible.forEach(tr => tbody.appendChild(tr));
+      rows.filter(r => r.style.display === 'none').forEach(tr => tbody.appendChild(tr));
+    }
+
+    q.addEventListener('input', apply);
+    cat.addEventListener('change', apply);
+    sort.addEventListener('change', apply);
+  </script>
+</body>
+</html>
