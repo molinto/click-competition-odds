@@ -1,0 +1,45 @@
+name: Scrape Click Competitions
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour, on the hour (UTC)
+  workflow_dispatch:      # allows manual runs from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Run scraper
+        run: |
+          mkdir -p out
+          python COMPS/scrape_clickcompetitions_all.py \
+            --category Cash="https://www.clickcompetitions.co.uk/competition-category/cash-competitions/" \
+            --category Cars="https://www.clickcompetitions.co.uk/competition-category/car-competitions/" \
+            --category Tech="https://www.clickcompetitions.co.uk/competition-category/tech-competitions/" \
+            --category Daily="https://www.clickcompetitions.co.uk/competition-category/daily-deals/" \
+            --out out/combined_click_comps.csv \
+            --out-json out/combined_click_comps.json \
+            --html out/index.html
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add out/
+          git commit -m "Update competition odds" || echo "No changes to commit"
+          git push
